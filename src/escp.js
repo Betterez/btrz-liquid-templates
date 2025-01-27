@@ -1,15 +1,3 @@
-
-// const escInitQzTray = "\x1B\x69\x61\x00\x1B\x40"; // set printer to ESC/P mode and clear memory buffer ; Inicializa la impresora
-// const lineSpacing = "\x1B\x33\x18"; // Espaciado de línea (1/6 de pulgada)
-// const lineSpacing2 = "\x1B\x33\x24"; // ESC 3 n (1/9 de pulgada)
-// const fontSelection = "\x1B\x4D"; // Fuente pequeña (Condensed)
-// const escBold = "\x1B\x45"; // Activa negrita
-// const escCancelBold = "\x1B\x46"; // Cancela negrita
-// const escNewLine = "\n"; // Nueva línea
-// const escCut = "\x1D\x56\x00"; // Corte de papel
-// const escEject = "\x0C"; // Form Feed (FF) - Expulsa la hoja
-// const escCondensed = "\x1B\x0F"; // Modo comprimido (17 cpi)
-
 function escInitQzTray(engine) {
   this.registerTag("escInitQzTray", {
     parse: function(tagToken, remainTokens) {
@@ -119,6 +107,16 @@ function escCondensed(engine) {
   });
 }
 
+function escTab(engine) {
+  this.registerTag("escTab", {
+    parse: function(tagToken, remainTokens) {
+
+    },
+    render: async function(ctx) {
+      return "\\x09";
+    }
+  });
+}
 module.exports = {
   escInitQzTray,
   lineSpacing,
@@ -129,5 +127,6 @@ module.exports = {
   escNewLine,
   escCut,
   escEject,
-  escCondensed
+  escCondensed,
+  escTab
 }
