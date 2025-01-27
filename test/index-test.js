@@ -720,7 +720,7 @@ and some more here`,
         {% lineSpacing2 %}
         {% fontSelection %}
         {% escBold %}
-         Shift location closure #: {{transaction._id}}
+        Shift location closure #: {{transaction._id}}
         {% escNewLine %}
         {% escCancelBold %}
         {% escCondensed %}
