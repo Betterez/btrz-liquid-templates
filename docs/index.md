@@ -111,7 +111,7 @@ Initialize the printer
 Set printer to ESC/P mode and clear memory buffer.
 
 ```liquid
-{% escInitQzTray %}
+{% raw%} {% escInitQzTray %} {% endraw %}
 ```
 
 * ## escBold
@@ -119,7 +119,7 @@ Set printer to ESC/P mode and clear memory buffer.
 Start bold font.
 
 ```liquid
-{% escBold %}
+{% raw%} {% escBold %} {% endraw %}
 ```
 
 * ## escCancelBold
@@ -127,7 +127,7 @@ Start bold font.
 Ends bold font.
 
 ```liquid
-{% escCancelBold %}
+{% raw%} {% escCancelBold %} {% endraw %}
 ```
 
 * ## fontSelection
@@ -135,7 +135,7 @@ Ends bold font.
 Starts selected font
 
 ```liquid
-{% fontSelection %}
+{% raw%} {% fontSelection %} {% endraw %}
 ```
 
 * ## escCondensed
@@ -143,7 +143,7 @@ Starts selected font
 Small condensed fonts
 
 ```liquid
-{% escCondensed %}
+{% raw%} {% escCondensed %} {% endraw %}
 ```
 
 * ## lineSpacing
@@ -151,7 +151,7 @@ Small condensed fonts
 Line spacing to 1/6 of an inch
 
 ```liquid
-{% lineSpacing %}
+{% raw%} {% lineSpacing %} {% endraw %}
 ```
 
 * ## lineSpacing2
@@ -159,7 +159,7 @@ Line spacing to 1/6 of an inch
 Line spacing to 1/9 of an inch
 
 ```liquid
-{% lineSpacing2 %}
+{% raw%} {% lineSpacing2 %} {% endraw %}
 ```
 
 * ## escNewLine
@@ -167,7 +167,7 @@ Line spacing to 1/9 of an inch
 New line
 
 ```liquid
-{% escNewLine %}
+{% raw%} {% escNewLine %} {% endraw %}
 ```
 
 * ## escCut
@@ -175,7 +175,7 @@ New line
 Paper cut
 
 ```liquid
-{% escCut %}
+{% raw%} {% escCut %} {% endraw %}
 ```
 
 * ## escEject
@@ -183,7 +183,7 @@ Paper cut
 Form feed (eject paper)
 
 ```liquid
-{% escEject %}
+{% raw%} {% escEject %} {% endraw %}
 ```
 
 * ## escTab
@@ -191,7 +191,7 @@ Form feed (eject paper)
 Move to next horizontal tab
 
 ```liquid
-{% escTab %}
+{% raw%} {% escTab %} {% endraw %}
 ```
 
 
