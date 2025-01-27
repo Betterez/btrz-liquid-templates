@@ -12,7 +12,7 @@ The vesion of PDFMake has been inlined and modified to allow for text rotation.
 ## Install
 
 ```bash
-npm i btrz-pdf
+npm i btrz-liquid-templates
 ```
 
 ## Restrictions
