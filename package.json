@@ -1,6 +1,6 @@
 {
   "name": "btrz-liquid-templates",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Extension and helpers for liquid templates to deal with our data and other things we need to encapsulate",
   "main": "src/index.js",
   "scripts": {
@@ -37,4 +37,3 @@
     "tinyify": "4.0.0"
   }
 }
-  
