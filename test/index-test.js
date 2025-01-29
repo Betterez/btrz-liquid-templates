@@ -724,8 +724,8 @@ and some more here`,
         {% escNewLine %}
         {% escCancelBold %}
         {% escCondensed %}
-        {% escEject %}`
+        {% escEject %}`;
     const documentDefinition = await tpl.processToEscp(template, data);
-    expect(documentDefinition).to.be.eql(`\\x1B\\x69\\x61\\x00\\x1B\\x40,\\x1B\\x33\\x24,\\x1B\\x4D,\\x1B\\x45,Shift location closure #: 5c9f8f8f8f8f8f8f8f8f8f8,\\n,\\x1B\\x46,\\x1B\\x0F,\\x0C`);
+    expect(documentDefinition).to.be.eql(`\u001bia\u0000\u001b@\u001b3$\u001bM\u001bEShift location closure #: 5c9f8f8f8f8f8f8f8f8f8f8\n\u001bF\u001b\u000f\f`);
   });
 });

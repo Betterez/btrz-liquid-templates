@@ -109,8 +109,9 @@ module.exports = {
     }).filter((line) => {
       return line.length > 0;
     })
-    .join(",");
+    .join("");
     // console.log(str);
+    str = str.replace(/\\n/g, "\n").replace(/\\x0C/g, "\x0C");
     return str;
   },
   async processToString(liquidTemplate, data) {

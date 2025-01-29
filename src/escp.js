@@ -3,7 +3,7 @@ function escInitQzTray(engine) {
     parse: function(tagToken, remainTokens) {
     },
     render: async function(ctx) {
-      return "\\x1B\\x69\\x61\\x00\\x1B\\x40";
+      return "\x1B\x69\x61\x00\x1B\x40";
     }
   });
 }
@@ -14,7 +14,7 @@ function lineSpacing(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x1B\\x33\\x18";
+      return "\x1B\x33\x18";
     }
   });
 }
@@ -25,7 +25,7 @@ function lineSpacing2(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x1B\\x33\\x24";
+      return "\x1B\x33\x24";
     }
   });
 }
@@ -36,7 +36,7 @@ function fontSelection(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x1B\\x4D";
+      return "\x1B\x4D";
     }
   });
 }
@@ -47,7 +47,7 @@ function escBold(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x1B\\x45";
+      return "\x1B\x45";
     }
   });
 }
@@ -58,7 +58,7 @@ function escCancelBold(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x1B\\x46";
+      return "\x1B\x46";
     }
   });
 }
@@ -80,7 +80,7 @@ function escCut(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x1D\\x56\\x00";
+      return "\x1D\x56\x00";
     }
   });
 }
@@ -102,7 +102,7 @@ function escCondensed(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x1B\\x0F";
+      return "\x1B\x0F";
     }
   });
 }
@@ -113,7 +113,7 @@ function escTab(engine) {
 
     },
     render: async function(ctx) {
-      return "\\x09";
+      return "\x09";
     }
   });
 }
