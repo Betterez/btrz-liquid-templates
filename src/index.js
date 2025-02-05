@@ -34,16 +34,16 @@ function getEngine() {
     extname: ".liquid",
     dynamicPartials: false,
     outputEscape: (val) => {
-      // if (typeof val === "string") {
-      //   return val.replace(/[\\]/g, '\\\\')
-      //   .replace(/[\"]/g, '\\"')
-      //   .replace(/[\/]/g, '\\/')
-      //   .replace(/[\b]/g, '\\b')
-      //   .replace(/[\f]/g, '\\f')
-      //   .replace(/[\n]/g, '\\n')
-      //   .replace(/[\r]/g, '\\r')
-      //   .replace(/[\t]/g, '\\t');
-      // }
+       if (typeof val === "string") {
+         return val.replace(/[\\]/g, '\\\\')
+         .replace(/[\"]/g, '\\"')
+         .replace(/[\/]/g, '\\/')
+         .replace(/[\b]/g, '\\b')
+         .replace(/[\f]/g, '\\f')
+         .replace(/[\n]/g, '\\n')
+         .replace(/[\r]/g, '\\r')
+         .replace(/[\t]/g, '\\t');
+      }
       return val;
     }
   });
