@@ -23,7 +23,9 @@ const {
   escCondensed,
   escNewLine,
   escCut,
-  escEject
+  escTab,
+  escEject,
+  escHPos
 } = require("./escp.js");
 
 function getEngine() {
@@ -102,6 +104,8 @@ module.exports = {
     engine.plugin(escCondensed);
     engine.plugin(escNewLine);
     engine.plugin(escCut);
+    engine.plugin(escTab);
+    engine.plugin(escHPos);
     engine.plugin(escEject);
     let str = await engine.parseAndRender(liquidTemplate, data);
     str = str.split(/\n/).map((line) => {

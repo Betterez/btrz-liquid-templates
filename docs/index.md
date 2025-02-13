@@ -194,6 +194,39 @@ Move to next horizontal tab
 {% raw%} {% escTab %} {% endraw %}
 ```
 
+* ## escHPos
+
+Set absolute horizontal print position  
+
+*reference **ESC $** command*
+
+```liquid
+{% raw%} {% escHPos pos %} {% endraw %}
+```
+
+#### Parameters
+
+| name | range | required | default |
+|------|------------|----------|---------|
+| pos | 0 <= pos <= 65535 | Y | 0 |
+
+### Description
+
+This command sets the absolute horizontal print position (in dots) for the next data that will be printed. It tells the printer exactly how many dots from the left margin to move the print head.
+
+### Units
+
+The measurement is in dots. For example, if the printer is configured such that 1 dot equals 1/60 inch, then setting **pos** to 360 would move the print head to approximately 360 dots, which could correspond to about 60 characters (if one character is roughly 6 dots wide).
+
+### Example
+
+Suppose you want to set the horizontal position to 360 dots
+
+#### Usage in Template
+
+{% raw %}{% escHPos 360 %}{% endraw %}
+
+This will move the print head so that the next printed data starts at 360 dots from the left margin.
 
 ## Images, barcodes and QR codes
 

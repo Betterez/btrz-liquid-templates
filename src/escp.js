@@ -117,6 +117,29 @@ function escTab(engine) {
     }
   });
 }
+
+function escHPos(engine) {
+  this.registerTag("escHPos", {
+    parse: function(tagToken, remainTokens) {
+      try {
+        const args = (tagToken.args || "").split(" ");
+        this.position = args[0] || 0;
+      } catch (err) {
+        this.position = args[0] || 0;
+      }
+    },
+    render: async function(ctx) {
+      try {
+        const nL = String.fromCharCode(this.position & 0xFF);
+        const nH = String.fromCharCode((this.position >> 8) & 0xFF);
+        const escMoveCursor = "\x1B\x24" + nL + nH;
+        return escMoveCursor;
+      } catch (e) {
+        return "PNA";
+      }
+    }
+  });
+}
 module.exports = {
   escInitQzTray,
   lineSpacing,
@@ -128,5 +151,6 @@ module.exports = {
   escCut,
   escEject,
   escCondensed,
-  escTab
+  escTab,
+  escHPos
 }
