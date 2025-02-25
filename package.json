@@ -27,7 +27,7 @@
     "liquidjs": "^10.20.2",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.46",
-    "symbology": "^4.0.1",
+    "symbology": "4.0.1",
     "written-number": "^0.11.1"
   },
   "devDependencies": {
