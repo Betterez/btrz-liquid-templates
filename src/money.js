@@ -123,12 +123,17 @@ function Money(engine) {
       const args = tagToken.args.split(" ");
       this.item = args[0] || "ticket.total";
       this.propName = args[1] || "total";
+      this.evalPropName = false;
+      if (args.length > 2) {
+        this.evalPropName = args[2] === "true"
+      }
     },
     render: async function(ctx) {
       const item = await this.liquid.evalValue(this.item, ctx);
+      const propName = this.evalPropName ? await this.liquid.evalValue(this.propName, ctx) : this.propName;
       if (ctx && ctx.environments && ctx.environments.providerPreferences && ctx.environments.providerPreferences.preferences &&
-        item && item[this.propName] !== undefined) {
-        return formatter.money(getCurrencyValue(item, this.propName, ctx.environments.providerPreferences, {prefix: "display"}));
+        item && item[propName] !== undefined) {
+        return formatter.money(getCurrencyValue(item, propName, ctx.environments.providerPreferences, {prefix: "display"}));
       }
       return "PNA";
     }

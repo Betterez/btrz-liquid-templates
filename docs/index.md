@@ -706,6 +706,7 @@ Parameters
 |------|------------|----------|---------|
 | item | An object in the data given to the liquid template | N | ticket
 | propName | The name of the property of the item | N | total
+| evalPropName | Evaluates the second parameter to get the propName of the context | N | false
 
 ```liquid
 "{% raw %} {%- money ticket total -%} {% endraw %}" //Given that ticket.total is 2800000 returns "28.00"
