@@ -17,6 +17,7 @@ const {
   escInitQzTray,
   lineSpacing,
   lineSpacing2,
+  lineSpacingX,
   fontSelection,
   escBold,
   escCancelBold,
@@ -98,6 +99,7 @@ module.exports = {
     engine.plugin(escInitQzTray);
     engine.plugin(lineSpacing);
     engine.plugin(lineSpacing2);
+    engine.plugin(lineSpacingX);
     engine.plugin(fontSelection);
     engine.plugin(escBold);
     engine.plugin(escCancelBold);

@@ -30,6 +30,29 @@ function lineSpacing2(engine) {
   });
 }
 
+function lineSpacingX(engine) {
+  this.registerTag("lineSpacingX", {
+    parse: function(tagToken, remainTokens) {
+      try {
+        const args = (tagToken.args || "").split(" ");
+        this.spacingValue = args[0] || 0;
+      } catch (err) {
+        this.spacingValue = args[0] || 0;
+      }
+    },
+    render: async function(ctx) {
+      try {
+        const spacing = this.spacingValue < 0 ? 0 : this.spacingValue > 255 ? 255 : this.spacingValue;
+        const value = String.fromCharCode(spacing);
+        const escLineSpacingX = "\x1B\x33" + value;
+        return escLineSpacingX;
+      } catch (e) {
+        return "PNA";
+      }
+    }
+  });
+}
+
 function fontSelection(engine) {
   this.registerTag("fontSelection", {
     parse: function(tagToken, remainTokens) {
@@ -144,6 +167,7 @@ module.exports = {
   escInitQzTray,
   lineSpacing,
   lineSpacing2,
+  lineSpacingX,
   fontSelection,
   escBold,
   escCancelBold,

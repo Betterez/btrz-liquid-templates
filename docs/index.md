@@ -148,7 +148,7 @@ Small condensed fonts
 
 * ## lineSpacing
 
-Line spacing to 1/6 of an inch
+Line spacing to 1/9 of an inch
 
 ```liquid
 {% raw%} {% lineSpacing %} {% endraw %}
@@ -156,11 +156,38 @@ Line spacing to 1/6 of an inch
 
 * ## lineSpacing2
 
-Line spacing to 1/9 of an inch
+Line spacing to 1/6 of an inch
 
 ```liquid
 {% raw%} {% lineSpacing2 %} {% endraw %}
 ```
+
+* ## lineSpacingX
+
+Sets the line spacing to n/216 inch
+
+```liquid
+{% raw%} {% lineSpacingX value %} {% endraw %}
+```
+
+#### Parameters
+
+| name | range | required | default |
+|------|------------|----------|---------|
+| pos | 0 <= value <= 255 | Y |  |
+
+* value: Number of vertical dots to insert between lines. For example, a value of 24 sets the line spacing to 1/9 inch.
+
+#### Common Values (for reference) 9-Pin ESC/P
+
+| Value | Inches | Description           |
+| ----- | ------ | --------------------- |
+| 6     | 1/36   | Very tight spacing    |
+| 12    | 1/18   | Tight spacing         |
+| 24    | 1/9    | Standard compact text |
+| 36    | 1/6    | Default line spacing  |
+| 48    | 2/9    | Loose spacing         |
+| 72    | 1/3    | Very loose spacing    |
 
 * ## escNewLine
 
