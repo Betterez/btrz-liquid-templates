@@ -748,4 +748,20 @@ and some more here`,
     const documentDefinition = await tpl.processToEscp(template, data);
     expect(documentDefinition).to.be.eql(`\u001bia\u0000\u001b@\u001b3$\u001bM\u001bEShift location closure #: 5c9f8f8f8f8f8f8f8f8f8f8\n\u001bF\u001b\u000f\f`);
   });
+
+  it("should return a text with unescaped characters", async () => {
+    const tpl = require("../src/index");
+    data.escapedCharacters = "&lt; &gt; &amp; $";
+    const template = `{
+      "content": [
+        "{%- unescape escapedCharacters %}"
+      ]
+    }`;
+    const documentDefinition = await tpl.processToObj(template, data);
+    expect(documentDefinition).to.be.eql({
+      "content": [
+        "< > & $"
+      ]
+    });
+  });
 });

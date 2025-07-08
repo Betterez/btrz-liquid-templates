@@ -2,7 +2,10 @@ const {Liquid} = require("liquidjs");
 const {Localizer} = require("./localizer.js");
 const {HorizontalLine} = require("./lines.js");
 const {Barcode} = require("./barcode.js");
-const {Html} = require("./html.js");
+const {
+  Html, 
+  Unescape
+} = require("./html.js");
 const {Money, CurcySymbol, CurcyIso, CurcyName, MoneyReduce} = require("./money.js");
 const {DateF, TimeF, DateTime, HumanDate, HumanDateTime, ExpDate, HumanArrivalDateTime, HumanDepartureDateTime,
   DepartureDateTime, ArrivalDateTime, DepartureDate, ArrivalDate, DepartureTime, ArrivalTime, HumanArrivalDate,
@@ -52,6 +55,7 @@ function getEngine() {
   });
   engine.plugin(Localizer);
   engine.plugin(Html);
+  engine.plugin(Unescape);
   engine.plugin(HorizontalLine);
   engine.plugin(Barcode);
   engine.plugin(Money);

@@ -90,8 +90,27 @@ function Html(engine) {
 });
 }
 
+function Unescape(engine) {
+  this.registerTag("unescape", {
+    parse: function(tagToken) {
+      this.item = tagToken.args;
+    },
+    render: async function(ctx) {
+      const str = await this.liquid.evalValue(this.item, ctx);
+
+      return(str || "")
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'");
+    }
+});
+}
+
 module.exports = {
-  Html
+  Html,
+  Unescape
 };
 
 
