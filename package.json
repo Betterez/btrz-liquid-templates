@@ -1,6 +1,6 @@
 {
   "name": "btrz-liquid-templates",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "Extension and helpers for liquid templates to deal with our data and other things we need to encapsulate",
   "main": "src/index.js",
   "scripts": {
