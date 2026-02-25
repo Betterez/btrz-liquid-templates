@@ -23,17 +23,17 @@
   "dependencies": {
     "axios": "^0.27.2",
     "btrz-formatter": "1.3.0",
-    "bz-date": "2.0.0",
-    "liquidjs": "^10.20.2",
+    "bz-date": "2.0.2",
+    "liquidjs": "^10.24.0",
     "moment": "^2.30.1",
-    "moment-timezone": "^0.5.46",
+    "moment-timezone": "^0.6.0",
     "symbology": "4.0.2",
     "written-number": "^0.11.1"
   },
   "devDependencies": {
     "browserify": "^17.0.1",
     "chai": "4.3.10",
-    "mocha": "11.1.0",
+    "mocha": "11.7.5",
     "tinyify": "4.0.0"
   }
 }
