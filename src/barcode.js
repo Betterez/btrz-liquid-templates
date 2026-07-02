@@ -14,8 +14,8 @@ function Barcode(engine) {
         this.content = "not-content-given";
         this.type = "code128";
         this.height = 30;
-        this.width = args[3] || 200;
-        this.margin = args[4] || "0,0,0,0";
+        this.width = 200;
+        this.margin = "0,0,0,0";
       }
     },
     render: async function(ctx) {
