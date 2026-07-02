@@ -5,7 +5,7 @@ layout: default
 
 Create pdf documents from liquid templates.
 
-This library uses [LiquidJS](https://liquidjs.com/), [Symbology](https://symbology.dev/), [Bz-Date](https://www.npmjs.com/package/bz-date), [btrz-formatter](https://www.npmjs.com/package/btrz-formatter) and link them together while adding some helpers to easily generate PDFs from templates.
+This library uses [LiquidJS](https://liquidjs.com/), [bwip-js](https://github.com/metafloor/bwip-js), [Bz-Date](https://www.npmjs.com/package/bz-date), [btrz-formatter](https://www.npmjs.com/package/btrz-formatter) and link them together while adding some helpers to easily generate PDFs from templates.
 
 The vesion of PDFMake has been inlined and modified to allow for text rotation.
 
@@ -286,8 +286,11 @@ It will use the value given and use generate a 'code11' barcode with a height of
 
 ### Supported types
 
-It supports all types supported by [https://symbology.dev/](Symbology).
-While symbology supports QRCODE PDFMake also had support for QR natively and we recommend it.
+The `{% barcode %}` tag accepts legacy Symbology-style type names and maps them to [bwip-js](https://github.com/metafloor/bwip-js) barcode identifiers. Common examples include `code128`, `code11`, `code39`, `qrcode`, `pdf417`, and `datamatrix`.
+
+The following legacy type names are not supported and will throw an explicit error: `gridmatrix`, `koreapost`, `upnqr`, and `vin`.
+
+While barcode generation supports QR codes, PDFMake also had support for QR natively and we recommend it for QR-specific use cases.
 
 * ## httpImg
 

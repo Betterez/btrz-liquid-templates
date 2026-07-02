@@ -2,6 +2,7 @@ const assert = require("node:assert/strict");
 const {describe, it, beforeEach, afterEach} = require("node:test");
 const http = require("node:http");
 const https = require("node:https");
+const {decodePngDataUri, isValidPngDataUri} = require("./helpers/barcode-decode.js");
 
 function closeAgentSockets(agent) {
   for (const sockets of Object.values(agent.sockets)) {
@@ -14,6 +15,17 @@ function closeAgentSockets(agent) {
     for (const socket of sockets) {
       socket.destroy();
     }
+  }
+}
+
+async function assertBarcodeItem(item, {width, margin, expectedContent}) {
+  assert.match(item.image, /^data:image\/png;base64,/);
+  assert.equal(isValidPngDataUri(item.image), true);
+  assert.equal(item.width, width);
+  assert.deepStrictEqual(item.margin, margin);
+  if (expectedContent !== undefined) {
+    const decoded = await decodePngDataUri(item.image);
+    assert.equal(decoded, expectedContent);
   }
 }
 
@@ -430,22 +442,21 @@ and some more here`,
       ]
     }`;
     const documentDefinition = await tpl.processToObj(template, data);
-    assert.deepStrictEqual(documentDefinition, {
-      "content": [
-        {
-          "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA3gAAAB4CAYAAACghlDTAAAAAklEQVR4AewaftIAAAPmSURBVO3BsW0EQQwEsJH673mcbnSA8ZlAcpI0H9rmNTN5tc2XmcmrbX4xM/nSNr+Ymbza5jUzebXNl5nJq23+Y2byi7Z5zUxebfOambza5svM5Bdt85qZvNrmy8zk1TZfZiZf2uY1M/mPtvkyM3m1zS9mJq+2ec1MvrTNl5nJq23+Y2byi7Z5zUxebfOamXxpm1/MTF5t85qZvNrmy8zk1TZfZia/aJvXzOTVNl9mJq+2ec1MvrTNl5nJq21+MTP50ja/mJm82uY1M3m1zZeZyattvsxMftE2r5nJq22+zExebfNlZvKlbV4zk/9omy8zk1fbfJmZfGmb18zk1Ta/mJm82uYXM5MvbfOambza5svM5Bdt85qZvNrmy8zk1TZfZiavtnnNTL60zZeZyattfjEz+dI2v5iZvNrmNTN5tc2XmcmXtvkyM/nSNl9mJl/a5jUz+dI2/zEz+Y+2ec1MXm3zmpl82QAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACX8+ALXvFMrcDQAAAABJRU5ErkJggg==",
-          "width": 200,
-          "margin": [0,0,0,0]
-        },{
-          "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAAAoCAYAAADufVZCAAAAAklEQVR4AewaftIAAADcSURBVO3BsY0EQRDDQKrzz1nvjrXA4R0ZrApQPrTllYRXW74k4Rdt+ZKEV1teSfjSli9J+EVbviTh1ZZfJOHVllcSvrTlF0l4teVLEl5t+ZKE/2jLKwlf2vKLJPyiLa8kvNrySsKXQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMPxSXLk+8Qj8BAAAAAElFTkSuQmCC",
-          "width": 2,
-          "margin": [10,5,2,4]
-        },{
-          "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAAAoCAYAAADufVZCAAAAAklEQVR4AewaftIAAADcSURBVO3BsY0EQRDDQKrzz1nvjrXA4R0ZrApQPrTllYRXW74k4Rdt+ZKEV1teSfjSli9J+EVbviTh1ZZfJOHVllcSvrTlF0l4teVLEl5t+ZKE/2jLKwlf2vKLJPyiLa8kvNrySsKXQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMPxSXLk+8Qj8BAAAAAElFTkSuQmCC",
-          "width": 2,
-          "margin": [0,0,0,0]
-        }
-      ]
+    assert.equal(documentDefinition.content.length, 3);
+    await assertBarcodeItem(documentDefinition.content[0], {
+      width: 200,
+      margin: [0, 0, 0, 0],
+      expectedContent: "not-content-given"
+    });
+    await assertBarcodeItem(documentDefinition.content[1], {
+      width: 2,
+      margin: [10, 5, 2, 4],
+      expectedContent: "1234"
+    });
+    await assertBarcodeItem(documentDefinition.content[2], {
+      width: 2,
+      margin: [0, 0, 0, 0],
+      expectedContent: "1234"
     });
   });
 
@@ -501,37 +512,44 @@ and some more here`,
       ]
     }`;
     const documentDefinition = await tpl.processToObj(template, data);
-    assert.deepStrictEqual(documentDefinition, {
-      "content": [
-        "Transaction Id: 5c9f8f8f8f8f8f8f8f8f8f8",
-        "=>h","adult and =>adult","child and =>child","person and =>person",{
+    const defaultBarcode = documentDefinition.content[7];
+    const explicitBarcode = documentDefinition.content[8];
+    const contentWithoutBarcodes = [
+      ...documentDefinition.content.slice(0, 7),
+      ...documentDefinition.content.slice(9)
+    ];
+
+    assert.deepStrictEqual(contentWithoutBarcodes, [
+      "Transaction Id: 5c9f8f8f8f8f8f8f8f8f8f8",
+      "=>h","adult and =>adult","child and =>child","person and =>person",{
         "svg": "<svg height='2' width='100'><line x1='0' y1='0' x2='1000' y2='0' style='stroke:rgb(60,60,60);stroke-width:2' /></svg>",
         "width": 356
       },{
         "svg": "<svg height='2' width='100'><line x1='0' y1='0' x2='1000' y2='0' style='stroke:rgb(0,0,0);stroke-width:1' /></svg>",
         "width": 500
-      },{
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA3gAAAB4CAYAAACghlDTAAAAAklEQVR4AewaftIAAAPmSURBVO3BsW0EQQwEsJH673mcbnSA8ZlAcpI0H9rmNTN5tc2XmcmrbX4xM/nSNr+Ymbza5jUzebXNl5nJq23+Y2byi7Z5zUxebfOambza5svM5Bdt85qZvNrmy8zk1TZfZiZf2uY1M/mPtvkyM3m1zS9mJq+2ec1MvrTNl5nJq23+Y2byi7Z5zUxebfOamXxpm1/MTF5t85qZvNrmy8zk1TZfZia/aJvXzOTVNl9mJq+2ec1MvrTNl5nJq21+MTP50ja/mJm82uY1M3m1zZeZyattvsxMftE2r5nJq22+zExebfNlZvKlbV4zk/9omy8zk1fbfJmZfGmb18zk1Ta/mJm82uYXM5MvbfOambza5svM5Bdt85qZvNrmy8zk1TZfZiavtnnNTL60zZeZyattfjEz+dI2v5iZvNrmNTN5tc2XmcmXtvkyM/nSNl9mJl/a5jUz+dI2/zEz+Y+2ec1MXm3zmpl82QAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACRsAAABO2AAAAHDCBgAAgBM2AAAAnLABAADghA0AAAAnbAAAADhhAwAAwAkbAAAATtgAAABwwgYAAIATNgAAAJywAQAA4IQNAAAAJ2wAAAA4YQMAAMAJGwAAAE7YAAAAcMIGAACAEzYAAACcsAEAAOCEDQAAACdsAAAAOGEDAADACX8+ALXvFMrcDQAAAABJRU5ErkJggg==",
-        "width": 200,
-        "margin": [0,0,0,0]
-      },{
-        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAAAoCAYAAADufVZCAAAAAklEQVR4AewaftIAAADcSURBVO3BsY0EQRDDQKrzz1nvjrXA4R0ZrApQPrTllYRXW74k4Rdt+ZKEV1teSfjSli9J+EVbviTh1ZZfJOHVllcSvrTlF0l4teVLEl5t+ZKE/2jLKwlf2vKLJPyiLa8kvNrySsKXQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMQ9KMPxSXLk+8Qj8BAAAAAElFTkSuQmCC",
-        "width": 2,
-        "margin": [10,5,2,4]
       },{"style": "header", "text": "Hello"},{"text": ""},{"text": "something"},{"text": ""},{"bold": true, "text": "html"},{"text": ""},{"italics": true, "text": "Italix"},
-        "28.36",
-        "$",
-        "CAD",
-        "59.00",
-        "Mar Dic 21, 2021 11:38 AM",
-        "Mar Dic 21, 2021",
-        "12/21/2021 11:38 AM",
-        "12/21/2021 11:38:00",
-        "12/21/2021",
-        "11:38 AM",
-        {"text": "something here"},{"text": "and some more here"},{"text": "and some more here"},
-        {"text": "something here", "style": "small"},{"text": "and some more here", "style": "small"},{"text": "and some more here", "style": "small"}
-      ]
+      "28.36",
+      "$",
+      "CAD",
+      "59.00",
+      "Mar Dic 21, 2021 11:38 AM",
+      "Mar Dic 21, 2021",
+      "12/21/2021 11:38 AM",
+      "12/21/2021 11:38:00",
+      "12/21/2021",
+      "11:38 AM",
+      {"text": "something here"},{"text": "and some more here"},{"text": "and some more here"},
+      {"text": "something here", "style": "small"},{"text": "and some more here", "style": "small"},{"text": "and some more here", "style": "small"}
+    ]);
+    await assertBarcodeItem(defaultBarcode, {
+      width: 200,
+      margin: [0, 0, 0, 0],
+      expectedContent: "not-content-given"
+    });
+    await assertBarcodeItem(explicitBarcode, {
+      width: 2,
+      margin: [10, 5, 2, 4],
+      expectedContent: "1234"
     });
   });
 

@@ -4,8 +4,8 @@
   "description": "Extension and helpers for liquid templates to deal with our data and other things we need to encapsulate",
   "main": "src/index.js",
   "scripts": {
-    "tdd": "node --test --watch test/index-test.js",
-    "test": "node --test test/index-test.js",
+    "tdd": "node --test --watch test/*-test.js",
+    "test": "node --test test/*-test.js",
     "preversion": "npm test",
     "postversion": "git push origin main && git push --tags",
     "version": "git tag $1"
@@ -23,11 +23,15 @@
   "dependencies": {
     "axios": "1.18.1",
     "btrz-formatter": "1.7.0",
+    "bwip-js": "^4.11.2",
     "bz-date": "2.2.0",
     "liquidjs": "10.27.1",
     "moment": "2.30.1",
     "moment-timezone": "0.6.2",
-    "symbology": "4.0.2",
     "written-number": "0.11.1"
+  },
+  "devDependencies": {
+    "@undecaf/zbar-wasm": "^0.11.0",
+    "pngjs": "^7.0.0"
   }
 }

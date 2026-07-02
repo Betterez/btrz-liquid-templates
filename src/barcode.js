@@ -1,8 +1,4 @@
-const {SymbologyType, createStream, OutputType} = require("symbology");
-
-function getCode(code) {
-  return SymbologyType[code.toUpperCase()];
-}
+const {generateBarcodePng} = require("./barcode-generator.js");
 
 function Barcode(engine) {
   this.registerTag("barcode", {
@@ -23,13 +19,12 @@ function Barcode(engine) {
       }
     },
     render: async function(ctx) {
-      let content = await this.liquid.evalValue(this.content, ctx) || this.content;
-      let result = await createStream({
-        symbology: getCode(this.type),
-        height: this.height,
-        showHumanReadableText: false,
-        scale: 2.0,
-      }, String(content), OutputType.PNG);
+      const content = await this.liquid.evalValue(this.content, ctx) || this.content;
+      const image = await generateBarcodePng({
+        type: this.type,
+        content,
+        height: this.height
+      });
       let margin = [0,0,0,0];
       try {
         margin = this.margin.split(",").map((i) => {
@@ -43,7 +38,7 @@ function Barcode(engine) {
         margin = [0,0,0,0];
       }
       return `{
-        "image": "${result.data}",
+        "image": "${image}",
         "width": ${this.width || 200},
         "margin": [${margin.join(",")}]
       }`;
