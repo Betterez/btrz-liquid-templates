@@ -275,18 +275,18 @@ Parameters
 It will use the value of ticket.code to generate the barcode with all the defaults
 
 ```liquid
-{% raw %} {% barcode ticket.code %} {% endraw %}
+{% raw %}{% barcode ticket.code %}{% endraw %}
 ```
 
 It will use the value given and use generate a 'code11' barcode with a height of 50 and a width of 300
 
 ```liquid
-{% raw %} {% barcode 1234 code11 50 300 20,20,20,0 %} {% endraw %} 
+{% raw %}{% barcode 1234 code11 50 300 20,20,20,0 %}{% endraw %}
 ```
 
 ### Supported types
 
-The `{% barcode %}` tag accepts legacy Symbology-style type names and maps them to [bwip-js](https://github.com/metafloor/bwip-js) barcode identifiers. Common examples include `code128`, `code11`, `code39`, `qrcode`, `pdf417`, and `datamatrix`.
+The `{% raw %}{% barcode %}{% endraw %}` tag accepts legacy Symbology-style type names and maps them to [bwip-js](https://github.com/metafloor/bwip-js) barcode identifiers. Common examples include `code128`, `code11`, `code39`, `qrcode`, `pdf417`, and `datamatrix`.
 
 The following legacy type names are not supported and will throw an explicit error: `gridmatrix`, `koreapost`, `upnqr`, and `vin`.
 
