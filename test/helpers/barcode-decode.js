@@ -24,7 +24,14 @@ function isValidPngDataUri(dataUri) {
   return signature.equals(pngSignature);
 }
 
+function getPngDimensionsFromDataUri(dataUri) {
+  const base64 = dataUri.replace(/^data:image\/png;base64,/, "");
+  const png = PNG.sync.read(Buffer.from(base64, "base64"));
+  return {width: png.width, height: png.height};
+}
+
 module.exports = {
   decodePngDataUri,
-  isValidPngDataUri
+  isValidPngDataUri,
+  getPngDimensionsFromDataUri
 };

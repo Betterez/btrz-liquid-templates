@@ -267,10 +267,11 @@ Parameters
 |------|------------|----------|---------|
 | data | The string to use to generate the barcode, it can be hardcoded or some of the 'data' given to the template | Y | |
 | type | The barcode type | N | code128
-| height | The barcode height | N | 30
-| width | The barcode width | N | 200
+| height | For linear and rectangular barcodes: bar/module height (mm) passed to bwip-js. For square matrix types (see below): ignored so the PNG stays 1:1 | N | 30
+| width | Display width of the image in the PDF (points). For square matrix types this is what controls rendered size | N | 200
 | margin | A list of 4 values for the margin | N | 0,0,0,0
 
+For square matrix types (`qrcode`, `microqr`, `datamatrix`, `aztec`, `azrune`, `hanxin`, `maxicode`, `hibc_qr`, `hibc_dm`, `hibc_aztec`, and `codeone`), `height` is not applied when generating the image. The PNG remains square and the PDF scales it using `width` only. Passing equal `height` and `width` values (for example `50 50`) is fine and matches common templates, but only `width` affects the drawn size.
 
 It will use the value of ticket.code to generate the barcode with all the defaults
 
@@ -282,6 +283,12 @@ It will use the value given and use generate a 'code11' barcode with a height of
 
 ```liquid
 {% raw %}{% barcode 1234 code11 50 300 20,20,20,0 %}{% endraw %}
+```
+
+A QR code drawn at 50 points wide (height argument is accepted but does not stretch the image):
+
+```liquid
+{% raw %}{% barcode ticket.qrCodeInfo qrcode 50 50 0,0,0,5 %}{% endraw %}
 ```
 
 ### Supported types
