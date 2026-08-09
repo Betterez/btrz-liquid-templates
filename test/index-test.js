@@ -305,6 +305,26 @@ and some more here`,
     });
   });
 
+  it("should return the display amount when it is zero on multiCurrency accounts", async () => {
+    const tpl = require("../src/index");
+    const template = `{
+      "content": [
+        "{%- money ticket total -%}",
+        "{%- moneyReduce ticket.ssrs subTotal -%}"
+      ]
+    }`;
+    data.ticket.displayTotal = 0;
+    data.ticket.ssrs[0].displaySubTotal = 0;
+    data.ticket.ssrs[1].displaySubTotal = 1500000;
+    const documentDefinition = await tpl.processToObj(template, data);
+    assert.deepStrictEqual(documentDefinition, {
+      "content": [
+        "0.00",
+        "15.00"
+      ]
+    });
+  });
+
   it("should return currency in letters", async () => {
     const tpl = require("../src/index");
     const template = `{
