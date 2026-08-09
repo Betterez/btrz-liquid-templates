@@ -12,7 +12,7 @@ function getCurrencyValue(item, propName, providerPreferences, userOptions) {
 
   if (providerPreferences.preferences.multiCurrency) {
     const prefixedPropName = propName.replace(/^./, "".concat(prefix).concat(propName[0].toUpperCase()));
-    return item[prefixedPropName] || item[propName];
+    return item[prefixedPropName] ?? item[propName];
   }
 
   return item[propName];
