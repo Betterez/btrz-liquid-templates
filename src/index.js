@@ -32,7 +32,7 @@ const {
   escHPos
 } = require("./escp.js");
 
-function getEngine() {
+function getEngine({escapeOutput = true} = {}) {
   const engine = new Liquid({
     layouts: ["/nowhere/"],
     root: ["/nowhere/"],
@@ -40,7 +40,7 @@ function getEngine() {
     extname: ".liquid",
     dynamicPartials: false,
     outputEscape: (val) => {
-       if (typeof val === "string") {
+       if (escapeOutput && typeof val === "string") {
          return val.replace(/[\\]/g, '\\\\')
          .replace(/[\"]/g, '\\"')
          .replace(/[\/]/g, '\\/')
@@ -124,8 +124,15 @@ module.exports = {
     str = str.replace(/\\n/g, "\n").replace(/\\x0C/g, "\x0C");
     return str;
   },
-  async processToString(liquidTemplate, data) {
-    const engine = getEngine();
+  /**
+   * @param {string} liquidTemplate
+   * @param {Object} data
+   * @param {Object} [options]
+   * @param {boolean} [options.escapeOutput=true] - when false, printed values are
+   *   rendered as written (no JSON-style escaping of \, ", /, and control characters).
+   */
+  async processToString(liquidTemplate, data, options) {
+    const engine = getEngine({escapeOutput: !options || options.escapeOutput !== false});
     const str = await engine.parseAndRender(liquidTemplate, data);
     return str;
   }
