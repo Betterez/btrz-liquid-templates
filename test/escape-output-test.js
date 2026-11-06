@@ -40,7 +40,7 @@ describe("processToString escapeOutput option", () => {
     assert.equal(out, "03\\/11\\/2026");
   });
 
-  it("only changes processToString: processToObj still escapes", async () => {
+  it("only changes processToString: processToObj output is unchanged", async () => {
     const obj = await tpl.processToObj("{\"v\": \"{{ date }}\"}", data);
     assert.deepStrictEqual(obj, {v: "03/11/2026"});
   });

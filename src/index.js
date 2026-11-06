@@ -132,7 +132,7 @@ module.exports = {
    *   rendered as written (no JSON-style escaping of \, ", /, and control characters).
    */
   async processToString(liquidTemplate, data, options) {
-    const engine = getEngine({escapeOutput: !options || options.escapeOutput !== false});
+    const engine = getEngine(options);
     const str = await engine.parseAndRender(liquidTemplate, data);
     return str;
   }
